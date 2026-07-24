@@ -1,3 +1,5 @@
 {
-    
+  "imports": {
+    "@mikro-orm/mariadb": "jsr:@mikro-orm/mariadb@^7.1.7"
+  }
 }
