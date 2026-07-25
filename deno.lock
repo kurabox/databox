@@ -1,3 +1,17 @@
 {
-  "version": "5"
+  "version": "5",
+  "remote": {
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/mod.ts": "38084c7d1f2ccaef44b134e17f10386b7e389ea3132cb78ca2d7538fc8e697e8",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/data-types.ts": "4ed6c375aca09ab58f86d60ed4c54daff3dd26104f41bcb6c4f7985ae90ac70b",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/funcs.ts": "6daf70351914e7b758f0daf78e41a470934f8be5c5a33500405692e2e110d5e6",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/maria-entities.ts": "54e106d561d3bbd6f2a840c23dbfdad977502f77c90cd6c46864ee76eae2765d",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/maria-schema.ts": "8aab805e02048dde8993d726296b6fbf27cfed433dfeb10a5a104bb7bfacd436",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/maria-services.ts": "316a3890719793d0c89e54abf7bbdea4cab356af44e6813ca35058cab42586cd",
+    "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/sys.ts": "b18d33e86e35b48f3523a0c2a5b75f68945871360ccc266504bbe9f8b101096e"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@mikro-orm/mariadb@^7.1.7"
+    ]
+  }
 }
