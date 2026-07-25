@@ -1,5 +1,6 @@
 {
   "imports": {
-    "@mikro-orm/mariadb": "jsr:@mikro-orm/mariadb@^7.1.7"
+    "@mikro-orm/mariadb": "jsr:@mikro-orm/mariadb@^7.1.7",
+    "@std/assert": "jsr:@std/assert@^1.0.19"
   }
 }

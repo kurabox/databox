@@ -1,5 +1,20 @@
 {
   "version": "5",
+  "specifiers": {
+    "jsr:@std/assert@^1.0.19": "1.0.19",
+    "jsr:@std/internal@^1.0.12": "1.0.13"
+  },
+  "jsr": {
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/internal@1.0.13": {
+      "integrity": "2f9546691d4ac2d32859c82dff284aaeac980ddeca38430d07941e7e288725c0"
+    }
+  },
   "remote": {
     "https://raw.githubusercontent.com/Kurabox/utilsbox/master/mod.ts": "38084c7d1f2ccaef44b134e17f10386b7e389ea3132cb78ca2d7538fc8e697e8",
     "https://raw.githubusercontent.com/Kurabox/utilsbox/master/src/data-types.ts": "4ed6c375aca09ab58f86d60ed4c54daff3dd26104f41bcb6c4f7985ae90ac70b",
@@ -11,7 +26,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@mikro-orm/mariadb@^7.1.7"
+      "jsr:@mikro-orm/mariadb@^7.1.7",
+      "jsr:@std/assert@^1.0.19"
     ]
   }
 }
