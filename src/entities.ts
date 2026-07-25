@@ -28,8 +28,8 @@ export const PageStatus = defineEntity({
     properties: {
         id: p.string().primary(),   // id của page status (khoá chính)
         page: () => p.oneToOne(Page), // tham chiếu đến id của page
-        createdTimestamp: p.bigint(),   // timestamp khởi tạo của page
-        updateTimestamp: p.bigint(),    // timestamp cập nhật của page
+        createdTimestamp: p.bigint().onCreate((): bigint => BigInt(Date.now())),   // timestamp khởi tạo của page
+        updateTimestamp: p.bigint().onCreate((): bigint => BigInt(Date.now())).onUpdate((): bigint => BigInt(Date.now())),    // timestamp cập nhật của page
     },
 });
 
@@ -38,7 +38,7 @@ export const HtmlContent = defineEntity({
     name: "HtmlContent",
     properties: {
         id: p.string().primary(),   // id của html content (khoá chính)
-        page: p.oneToOne(Page), // tham chiếu đến id của page
+        page: () => p.oneToOne(Page), // tham chiếu đến id của page
         htmlData: p.text(),   // nội dung html của page
     },
 });
@@ -48,7 +48,7 @@ export const HtmlHash = defineEntity({
     name: "HtmlHash",
     properties: {
         id: p.string().primary(),   // id của html hash content (khoá chính)
-        page: p.oneToOne(Page), // tham chiếu đến id của page
+        page: () => p.oneToOne(Page), // tham chiếu đến id của page
         hashData: p.string(),   // nội dung đã hash của page
     }
 });
@@ -58,7 +58,7 @@ export const Image = defineEntity({
     name: "Image",
     properties: {
         id: p.string().primary(),   // id của image (khoá chính)
-        page: p.manyToOne(Page),    // tham chiếu đến id của page
+        page: () => p.manyToOne(Page),    // tham chiếu đến id của page
         imageUrl: p.string(),   // url của image
         altText: p.string(),    /// alt text của image
         source: p.string(), // nguồn của image
