@@ -69,7 +69,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "Page" },
+        {
+            sequelize: sequelize,
+            modelName: "Page",
+            tableName: "page",
+            timestamps: false,  // không thêm giá trị timestamps mặc định khi thêm dữ liệu
+        },
     );
 
     // Mô hình hoá PageMeta entity
@@ -113,7 +118,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "PageMeta" },
+        {
+            sequelize: sequelize,
+            modelName: "PageMeta",
+            tableName: "page_meta",
+            timestamps: false,
+        },
     );
 
     // Mô hình hoá PageStatus entity
@@ -142,7 +152,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "PageStatus" },
+        {
+            sequelize: sequelize,
+            modelName: "PageStatus",
+            tableName: "page_status",
+            timestamps: false,
+        },
     );
 
     // Mô hình hoá HtmlContent entity
@@ -166,7 +181,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "HtmlContent" },
+        {
+            sequelize: sequelize,
+            modelName: "HtmlContent",
+            tableName: "html_content",
+            timestamps: false,
+        },
     );
 
     // Mô hình hoá HtmlHash entity
@@ -190,7 +210,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "HtmlHash" },
+        {
+            sequelize: sequelize,
+            modelName: "HtmlHash",
+            tableName: "html_hash",
+            timestamps: false,
+        },
     );
 
     // Mô hình hoá Image entity
@@ -224,7 +249,12 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 allowNull: false,
             }
         },
-        { sequelize: sequelize, modelName: "Image" },
+        {
+            sequelize: sequelize,
+            modelName: "Image",
+            tableName: "image",
+            timestamps: false,
+        },
     );
 
     // Khởi tạo tham chiếu khoá ngoại
