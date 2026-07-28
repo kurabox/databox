@@ -2,6 +2,7 @@ import { assert, assertEquals } from "@std/assert";
 import { DbConfig, loadEnvDbConfig, initSequelizeInstance, modelingIndexDbEntities } from "../src/dbservices.ts";
 import { Sequelize, Transaction } from "sequelize";
 import { Page } from "../src/entities.ts";
+import { utilsbox } from "../libs.ts";
 
 Deno.test("load env config test", (): void => {
     const config: DbConfig | null = loadEnvDbConfig();
@@ -24,7 +25,7 @@ Deno.test("sample query test", async (): Promise<void> => {
     modelingIndexDbEntities(sequelize);
     const t: Transaction = await sequelize.transaction();
     try {
-        await Page.create({ id: "id01", url: "www.example.com" }, { transaction: t });
+        await Page.create({ id: utilsbox.generateV4UUID(), url: "www.example2.com" }, { transaction: t });
         await t.commit();   // commit các thay đổi tư transaction vào database
     } catch (err: unknown) {
         await t.rollback();

@@ -1,5 +1,7 @@
 import { Sequelize, Dialect, DataTypes } from "sequelize";
 import { Page, PageMeta, PageStatus, HtmlContent, HtmlHash, Image } from "./entities.ts";
+import { v4 } from "@std/uuid";
+import { utilsbox } from "../libs.ts";
 
 // Cấu hình kết nối database
 export type DbConfig = {
@@ -62,11 +64,17 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,   // primary key của page
+                validate: {
+                    isUUID: 4,  // cần phải là uuid
+                }
             },
             url: {
                 type: DataTypes.TEXT,
                 field: "url",
                 allowNull: false,
+                validate: {
+                    isUrl: true,    // cần phải là url
+                },
             }
         },
         {
@@ -86,36 +94,69 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,   // primary key của page
+                validate: {
+                    isUUID: 4,  // cần phải là uuid
+                },
             },
             pageId: {
                 type: DataTypes.STRING,
                 field: "page_id",
                 allowNull: false,
+                validate: {
+                    isUUID: 4,  // cần phải là uuid
+                },
             },
             title: {
                 type: DataTypes.TEXT,
                 field: "title",
                 allowNull: false,
+                validate: {
+                    fn(title: string): void {
+                        if (!utilsbox.isValidStringWithMinLen(title, 2)) {
+                            throw new Error("Only valid title is allowed! (Has atlest 2 alphabet chars)");
+                        }
+                    }
+                },
             },
             publicationTimestamp: {
                 type: DataTypes.BIGINT,
                 field: "publication_timestamp",
-                allowNull: false,
+                allowNull: true,
+                validate: {
+                    isInt: true,
+                }
             },
             pageType: {
                 type: DataTypes.STRING,
                 field: "page_type",
                 allowNull: false,
+                validate: {
+                    fn(pageType: string): void {
+                        if (!utilsbox.isPageTypeValue(pageType)) {
+                            throw new Error("Only valid page type value is allowed!");
+                        }
+                    }
+                },
             },
             source: {
                 type: DataTypes.STRING,
                 field: "source",
                 allowNull: false,
+                validate: {
+                    notEmpty: true // source không được rỗng
+                },
             },
             language: {
                 type: DataTypes.STRING,
                 field: "language",
                 allowNull: false,
+                validate: {
+                    fn(language: string): void {
+                        if (!utilsbox.isLanguageValue(language)) {
+                            throw new Error("Only valid language value is allowed!");
+                        }
+                    }
+                }
             }
         },
         {
@@ -135,21 +176,33 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,
+                validate: {
+                    isUUID: 4,  // phải là uuid
+                },
             },
             pageId: {
                 type: DataTypes.STRING,
                 field: "page_id",
                 allowNull: false,
+                validate: {
+                    isUUID: 4,  // phải là uuid
+                }
             },
             createdTimestamp: {
                 type: DataTypes.BIGINT,
                 field: "created_timestamp",
                 allowNull: false,
+                validate: {
+                    isInt: true,    // cần phải là kiểu int
+                },
             },
             updateTimestamp: {
                 type: DataTypes.BIGINT,
                 field: "update_timestamp",
                 allowNull: false,
+                validate: {
+                    isInt: true,    // cần phải là kiểu int
+                }
             }
         },
         {
@@ -169,16 +222,30 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,
+                validate: {
+                    isUUID: 4,  // phải là uuid
+                },
             },
             pageId: {
                 type: DataTypes.STRING,
                 field: "page_id",
                 allowNull: false,
+                validate: {
+                    isUUID: 4,  // phải là uuid
+                },
             },
             htmlData: {
                 type: DataTypes.TEXT,
                 field: "html_data",
                 allowNull: false,
+                validate: {
+                    // Gọi hàm validate html string
+                    fn(htmlData: string): void {
+                        if (!utilsbox.validateHtmlString(htmlData)) {
+                            throw new Error("Only valid html data is allowed!");
+                        }
+                    }
+                },
             }
         },
         {
@@ -198,16 +265,29 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,
+                validate: {
+                    isUUID: 4,
+                },
             },
             pageId: {
                 type: DataTypes.STRING,
                 field: "page_id",
                 allowNull: false,
+                validate: {
+                   isUUID: 4,
+                },
             },
             hashData: {
                 type: DataTypes.STRING,
                 field: "hash_data",
                 allowNull: false,
+                validate: {
+                    fn(hashData: string): void {
+                        if (!utilsbox.validateSHA256Hash(hashData)) {
+                            throw new Error("Only SHA256 format hash is allowed!");
+                        }
+                    }
+                },
             }
         },
         {
@@ -227,26 +307,41 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
                 field: "id",
                 allowNull: false,
                 primaryKey: true,
+                validate: {
+                    isUUID: 4,
+                }
             },
             pageId: {
                 type: DataTypes.STRING,
                 field: "page_id",
                 allowNull: false,
+                validate: {
+                    isUUID: 4,
+                }
             },
             imageUrl: {
                 type: DataTypes.STRING,
                 field: "image_url",
                 allowNull: false,
+                validate: {
+                    isUrl: true,
+                }
             },
             altText: {
                 type: DataTypes.STRING,
                 field: "alt_text",
                 allowNull: false,
+                validate: {
+                    notEmpty: true,
+                }
             },
             source: {
                 type: DataTypes.STRING,
                 field: "source",
                 allowNull: false,
+                validate: {
+                    notEmpty: true,
+                }
             }
         },
         {
