@@ -2,3 +2,4 @@
 export * from "./src/data-services.ts";
 export * from "./src/data-types.ts";
 export * from "./src/dbservices.ts";
+export * from "./src/funcs.ts";
