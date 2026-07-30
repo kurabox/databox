@@ -1,6 +1,5 @@
 import { Sequelize, Dialect, DataTypes } from "sequelize";
-import { Page, PageMeta, PageStatus, HtmlContent, HtmlHash, Image } from "./entities.ts";
-import { v4 } from "@std/uuid";
+import { Page, PageMeta, PageStatus, HtmlContent, HtmlHash, Image } from "./models.ts";
 import { utilsbox } from "../libs.ts";
 
 // Cấu hình kết nối database

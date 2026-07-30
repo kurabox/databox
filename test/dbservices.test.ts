@@ -1,7 +1,7 @@
 import { assert, assertEquals } from "@std/assert";
 import { DbConfig, loadEnvDbConfig, initSequelizeInstance, modelingIndexDbEntities } from "../src/dbservices.ts";
 import { Sequelize, Transaction } from "sequelize";
-import { Page } from "../src/entities.ts";
+import { Page } from "../src/models.ts";
 import { utilsbox } from "../libs.ts";
 
 Deno.test("load env config test", (): void => {
