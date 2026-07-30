@@ -50,7 +50,7 @@ export type Image = {
 // Kiểu chuyển tiếp PageData dùng cho việc chuyển dữ liệu từ crawler
 export type PageData = {
     page: Page;
-    status: PageData;
+    status: PageStatus;
     meta: PageMeta;
     htmlContent: HtmlContent;
     htmlHash: HtmlHash;
