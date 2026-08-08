@@ -1,4 +1,4 @@
-import { Sequelize, Dialect, DataTypes } from "sequelize";
+import { Sequelize, Dialect, DataTypes, Transaction } from "sequelize";
 import { Page, PageMeta, PageStatus, HtmlContent, HtmlHash, Image } from "./models.ts";
 import { utilsbox } from "../libs.ts";
 
@@ -364,4 +364,22 @@ export function modelingIndexDbEntities(sequelize: Sequelize): void {
     HtmlContent.belongsTo(Page, { foreignKey: "page_id" });
     HtmlHash.belongsTo(Page, { foreignKey: "page_id" });
     Image.belongsTo(Page, { foreignKey: "page_id" });
+}
+
+/**
+ * Hàm thực thi truy vấn chung theo transaction (không cần khởi tạo lai sequelize và transaction)
+ * @param sequelize 
+ * @param fn 
+ * @throws {unknown}  // Hàm này sẽ throw nếu gặp lỗi
+ */
+export async function runWithTransaction<T>(sequelize: Sequelize, fn: (t: Transaction) => Promise<T>): Promise<T> {
+    const t: Transaction = await sequelize.transaction();   // Khởi tạo transaction cho sequelize
+    try {
+        const result: T = await fn(t);  // Khởi chạy callback function để thực thi query
+        await t.commit();
+        return result;
+    } catch (err: unknown) {
+        await t.rollback(); // huỷ thay đồi của transaction
+        throw err;  // throw ra lỗi gặp phải
+    }
 }

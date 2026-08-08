@@ -1,5 +1,5 @@
 import { assert, assertEquals } from "@std/assert";
-import { DbConfig, loadEnvDbConfig, initSequelizeInstance, modelingIndexDbEntities } from "../src/dbservices.ts";
+import { DbConfig, loadEnvDbConfig, initSequelizeInstance, modelingIndexDbEntities, runWithTransaction } from "../src/dbservices.ts";
 import { Sequelize, Transaction } from "sequelize";
 import { Page } from "../src/models.ts";
 import { utilsbox } from "../libs.ts";
@@ -19,16 +19,21 @@ Deno.test("init sequelize instance test", async (): Promise<void> => {
     await sequelize.authenticate();
 });
 
-Deno.test("sample query test", async (): Promise<void> => {
+Deno.test("runWithTransaction test", async (): Promise<void> => {
     const dbConfig: DbConfig = loadEnvDbConfig();
     const sequelize: Sequelize = initSequelizeInstance(dbConfig, "mariadb");
     modelingIndexDbEntities(sequelize);
-    const t: Transaction = await sequelize.transaction();
     try {
-        await Page.create({ id: utilsbox.generateV4UUID(), url: "www.example2.com" }, { transaction: t });
-        await t.commit();   // commit các thay đổi tư transaction vào database
+        await runWithTransaction(sequelize, async (t: Transaction): Promise<void> => {
+            await Page.create(
+                {
+                    id: utilsbox.generateV4UUID(),
+                    url: "www.page1.com",
+                },
+                { transaction: t },
+            );
+        });
     } catch (err: unknown) {
-        await t.rollback();
         console.log(err);
     }
 });
